@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 async function register(email, password, first_name, last_name) {
     try {
         let user = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-        if (!user) {
+        if (!user || user.length < 1) {
             let encryptedPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUNDS));
             let result = await db.query('INSERT INTO users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)', [email, encryptedPassword, first_name, last_name]);
             await db.query('INSERT INTO user_balances (user_id) VALUES (?)', [result.insertId]);

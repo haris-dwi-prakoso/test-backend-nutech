@@ -41,7 +41,7 @@ async function login(req, res) {
             if (result.valid) res.status(200).json({
                 status: 0,
                 message: "Login sukses",
-                data: { token: token }
+                data: { token: result.token }
             });
             else res.status(400).json({
                 status: 103,
